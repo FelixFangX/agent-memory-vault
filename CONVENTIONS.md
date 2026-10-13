@@ -36,3 +36,16 @@ Minimal per request: `global/principles.md` plus the one scope the request is ab
 ## Review (optional)
 
 Every ~3 days, or when something changed: resolve pending items, refresh `expires`, delete notes that stopped being useful. Skip the review when nothing changed.
+
+## Checker rules (privacy)
+
+| Rule | Flags | Where |
+|---|---|---|
+| `secret` | API keys/tokens (sk-, ghp_, xox*-, AKIA…), private key blocks, JWTs, `password:`-style lines | everywhere |
+| `personal-data` | email addresses, phone numbers | outside `personal/` |
+| `relationship` | partner/spouse/dating terms (EN + 中文) | everywhere |
+| `chat-log` | ≥2 user and ≥2 assistant turns in one note | everywhere |
+| `model-reasoning` | `<thinking>`-style blocks, "chain of thought:" | everywhere |
+| `tool-config` | `mcpServers`, `alwaysApply`, `allowedTools`… | everywhere |
+
+These are heuristics. To accept a false positive on one line, append `<!-- vault-check:allow <rule> -->`. Findings report file and line, never the matched value.
