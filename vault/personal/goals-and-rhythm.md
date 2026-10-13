@@ -3,7 +3,7 @@ scope: personal
 type: goal
 source: confirmed
 updated: 2026-01-15
-expires: 2026-03-31
+expires: 2027-03-31
 private: true
 ---
 
