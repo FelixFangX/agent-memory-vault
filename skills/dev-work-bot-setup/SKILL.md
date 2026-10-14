@@ -9,6 +9,13 @@ description: >-
 
 Turns a Grok Bot into a developer's work assistant: it follows a product area across repos and trackers, tests preview builds, drafts team messages in the owner's voice, and stays inside strict safety rules. Never store or ask for secret values in chat, in this skill, or in memory.
 
+## 0. Prepare the box (first use, then when something's missing)
+Before the interview, run `scripts/setup-box.sh --check` from this skill's repo on the box. Clone the repo first if it isn't there yet.
+- If a **required** tool is missing, run `scripts/setup-box.sh`. It's idempotent and installs only what's missing. Then run `--check` again.
+- Report the result as one short line per missing tool or login. Optional tools only matter when the work needs them.
+- Logins are the owner's job. Give them the exact command from `docs/box-environment.md` (`gh auth login --web`, `lark-cli auth login`, `npx supabase login`) so they finish the device code or browser step themselves. Never ask for a token in chat.
+- Secrets live only in `~/.config/dev-work/*.env` (dir 700, files 600), entered via secure input. Re-run `--check` if it reports `secrets-dir=loose`.
+
 ## 1. Interview the owner (one question at a time)
 Ask only what you can't find yourself, and save each answer to agent memory (profile tier):
 1. **Focus area**: product, feature area, and the tracking issue(s) that define "done".
