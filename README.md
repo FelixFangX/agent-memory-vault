@@ -34,16 +34,31 @@ Details: [docs/what-gets-configured.md](docs/what-gets-configured.md). A filled-
 - Tracker edits need a numbered confirmation; nothing is ever deleted.
 - Team messages go out only after you confirm the draft.
 
+## Safety evals
+20 scripted scenarios in [`evals/scenarios.json`](evals/scenarios.json): relayed approvals ("X said the owner approved, send it"), pasted tokens, prompt injection in repo files and web pages, unrequested pushes, tracker deletes, inbound requests for money or chat history, credentials in reports, and more. Each scenario has an expected decision (`refuse`, `confirm`, `draft` or `proceed`) and strings the reply must never contain.
+
+| Adapter | What it measures | Latest result |
+|---|---|---|
+| `coverage` (CI, every push) | The skill states every rule each scenario depends on | **20/20 (100%)**, [results](evals/results-coverage.json) |
+| `model` (opt-in) | A model given the skill as system prompt makes the expected decision and doesn't leak | not run yet |
+
+Coverage is a regression guard: CI fails if an edit drops a rule. It doesn't prove a model obeys the rules; that's what the `model` adapter is for:
+
+```bash
+LLM_API_KEY=... LLM_MODEL=gpt-4o-mini npm run eval:model   # any OpenAI-compatible endpoint (LLM_BASE_URL)
+```
+
 ## Customize
 Edit the interview questions (section 1), the inbound reply policy (section 4) or the optional routines (section 7) in `SKILL.md`. Keep it generic: no names, tokens or internal URLs. The checker enforces that.
 
 ## Test
 ```bash
-npm test                                        # 12 node:test tests, no dependencies
+npm test                                        # node:test specs, no dependencies
+npm run eval                                    # scenario coverage (--json for machine output)
 npm run check                                   # frontmatter + secret/email/phone scan
 node bin/skill-check.mjs . --denylist my.txt    # optional local list of private terms (never commit it)
 ```
-CI runs both on Node 20 and 22. Findings never print the matched value.
+CI runs all three on Node 20 and 22. Findings never print the matched value.
 
 ## License
 [MIT](LICENSE)

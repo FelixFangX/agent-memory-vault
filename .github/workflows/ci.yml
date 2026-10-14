@@ -12,3 +12,4 @@ jobs:
         with: { node-version: '${{ matrix.node }}' }
       - run: npm test
       - run: npm run check   # generic patterns only; the local denylist is never committed
+      - run: npm run eval   # scenario coverage; fails below 100%
