@@ -15,6 +15,8 @@ status   skill: dev-work-bot-setup   runtime: Grok Bot   deps: none   checks: CI
 1. **Copy the skill**: add [`skills/dev-work-bot-setup/SKILL.md`](skills/dev-work-bot-setup/SKILL.md) to your bot's skills, or
 2. **Ask the bot**: paste the file into a chat and say *"Save this as a skill and run it."*
 
+3. **Prepare the box**: in the bot's box, run `scripts/setup-box.sh --check` (report only) or `scripts/setup-box.sh` (install what's missing). You sign in to GitHub and the chat CLI yourself. See [docs/box-environment.md](docs/box-environment.md).
+
 The bot then interviews you one question at a time and configures itself. Nothing external happens without your confirmation.
 
 ## What it configures
