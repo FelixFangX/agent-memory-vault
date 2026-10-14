@@ -3,19 +3,11 @@
   <img alt="dev-work-grok-bot-skill: interview, connect, safe assistant" src="docs/assets/header-light.svg" width="100%">
 </picture>
 
-# dev-work-grok-bot-skill
+**A Grok Bot skill that turns your bot into a developer work assistant: it follows your product area across repos and trackers, tests preview builds, drafts team messages in your voice, and stays inside strict safety rules.** No dependencies; CI checks the skill on every push.
 
-A Grok Bot skill that turns your bot into a developer work assistant. It follows your product area across repos and trackers, tests preview builds, drafts team messages in your voice, and stays inside strict safety rules.
-
-```
-status   skill: dev-work-bot-setup   runtime: Grok Bot   deps: none   checks: CI
-```
-
-## Install
-1. **Copy the skill**: add [`skills/dev-work-bot-setup/SKILL.md`](skills/dev-work-bot-setup/SKILL.md) to your bot's skills, or
-2. **Ask the bot**: paste the file into a chat and say *"Save this as a skill and run it."*
-
-3. **Prepare the box**: in the bot's box, run `scripts/setup-box.sh --check` (report only) or `scripts/setup-box.sh` (install what's missing). You sign in to GitHub and the chat CLI yourself. See [docs/box-environment.md](docs/box-environment.md).
+## Quickstart
+1. **Add the skill**: copy [`skills/dev-work-bot-setup/SKILL.md`](skills/dev-work-bot-setup/SKILL.md) into your bot's skills, or paste it into a chat and say *"Save this as a skill and run it."*
+2. **Prepare the box**: on the bot's box, run `scripts/setup-box.sh --check` (report only) or `scripts/setup-box.sh` (install what's missing). You sign in to GitHub and the chat CLI yourself. See [docs/box-environment.md](docs/box-environment.md).
 
 The bot then interviews you one question at a time and configures itself. Nothing external happens without your confirmation.
 
@@ -50,10 +42,20 @@ Coverage is a regression guard: CI fails if an edit drops a rule. It doesn't pro
 LLM_API_KEY=... LLM_MODEL=gpt-4o-mini npm run eval:model   # any OpenAI-compatible endpoint (LLM_BASE_URL)
 ```
 
+## For agents (`--json`)
+
+```bash
+scripts/setup-box.sh --check --json        # tools, versions, sign-in presence (never token values)
+node bin/skill-check.mjs . --json          # findings: rule + file + line, never the matched value
+node bin/skill-eval.mjs --json             # per-scenario pass/fail and the summary
+```
+
+Each command exits non-zero on failure, so an agent can gate on it. Repo conventions: [AGENTS.md](AGENTS.md).
+
 ## Customize
 Edit the interview questions (section 1), the inbound reply policy (section 4) or the optional routines (section 7) in `SKILL.md`. Keep it generic: no names, tokens or internal URLs. The checker enforces that.
 
-## Test
+## Testing
 ```bash
 npm test                                        # node:test specs, no dependencies
 npm run eval                                    # scenario coverage (--json for machine output)
