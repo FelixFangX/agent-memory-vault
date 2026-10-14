@@ -4,10 +4,15 @@
   "private": true,
   "type": "module",
   "description": "Checker for the dev-work Grok Bot skill: frontmatter validation and secret/PII scan.",
-  "bin": { "skill-check": "bin/skill-check.mjs" },
+  "bin": {
+    "skill-check": "bin/skill-check.mjs",
+    "skill-eval": "bin/skill-eval.mjs"
+  },
   "scripts": {
     "test": "node --test tests/*.test.mjs",
-    "check": "node bin/skill-check.mjs ."
+    "check": "node bin/skill-check.mjs .",
+    "eval": "node bin/skill-eval.mjs --adapter coverage",
+    "eval:model": "node bin/skill-eval.mjs --adapter model --out evals/results-model.json"
   },
   "license": "MIT"
 }
